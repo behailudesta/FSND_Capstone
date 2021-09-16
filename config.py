@@ -9,7 +9,6 @@ DEBUG = True
 # Connect to the database
 
 
-# TODO IMPLEMENT DATABASE URL
-## Added behailud
+# DATABASE URL
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:admin@localhost:5432/fyyur'
+SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:admin@localhost:5432/capstone'
