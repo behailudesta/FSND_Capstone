@@ -1,1 +1,9 @@
-
+export AUTH0_DOMAIN='behailud.us.auth0.com'
+export ALGORITHMS=['RS256']
+export API_AUDIENCE='capstone-fsnd-api'
+export CLIENT_ID='TBBRdxHoFtZryEWSi7TSsmysP3EQ1ac4'
+export FLASK_APP=app.py
+export DATABASE_URL=
+export casting_assistant_token=
+export casting_director_token=
+export executive_producer_token=
