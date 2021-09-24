@@ -15,8 +15,9 @@ from flask_wtf import Form
 from sqlalchemy.orm import backref
 from werkzeug.wrappers import response
 from models import * #setup_db, Actors, Movies, Performances
+from auth.auth import AuthError, requires_auth
 
-
+# number of items per page for pagination
 ITEMS_PER_PAGE = 10
 
 '''
@@ -61,6 +62,10 @@ def create_app(test_config=None):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization, true')
     response.headers.add('Access-Control-Allow-Headers', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
+  
+  '''
+  Checking if web server is up and running. Status 200 OK
+  '''
 
   @app.route('/')
   def status():
@@ -72,6 +77,7 @@ def create_app(test_config=None):
   An endpoint to handle GET requests for all available Movies.
   '''
   @app.route('/movies')
+  @requires_auth("get:movies")
   def retrieve_movies():
     selection = Movies.query.order_by(Movies.id).all()
     current_movies = paginate_movies(request, selection)
@@ -90,6 +96,7 @@ def create_app(test_config=None):
   An endpoint to handle GET requests for all available Actors.
   '''
   @app.route('/actors')
+  @requires_auth("get:actors")
   def retrieve_actors():
     selection = Actors.query.order_by(Actors.id).all()
     current_actors = paginate_actors(request, selection)
@@ -98,7 +105,7 @@ def create_app(test_config=None):
           abort(404)
 
     return jsonify({
-      'movies' : current_actors,
+      'actors' : current_actors,
       'total_actors' : len(Actors.query.all()),
       'success' : True
     })
@@ -107,6 +114,7 @@ def create_app(test_config=None):
   DELETE a movie. 
   '''
   @app.route('/movies/<int:movies_id>', methods=['DELETE'])
+  @requires_auth("delete:movies")
   def delete_movies(movies_id):
     try:
       movies = Movies.query.filter(Movies.id == movies_id).one_or_none()
@@ -133,6 +141,7 @@ def create_app(test_config=None):
   DELETE an actor. 
   '''
   @app.route('/actors/<int:actors_id>', methods=['DELETE'])
+  @requires_auth("delete:actors")
   def delete_actors(actors_id):
     try:
       actors = Actors.query.filter(Actors.id == actors_id).one_or_none()
@@ -160,6 +169,7 @@ def create_app(test_config=None):
   Post a movie. 
   '''
   @app.route('/movies', methods=['POST'])
+  @requires_auth("post:movies")
   def create_new_movies():
     body = request.get_json()
     new_title = body.get('title',None)
@@ -179,13 +189,14 @@ def create_app(test_config=None):
       'totalMovies' : len(Movies.query.all())
     })   
 
-    except :
+    except unprocessable:
        abort(422)
 
   '''
   Post an Actor. 
   '''
   @app.route('/actors', methods=['POST'])
+  @requires_auth("post:actors")
   def create_new_actors():
     body = request.get_json()
     new_name = body.get('name',None)
@@ -206,13 +217,14 @@ def create_app(test_config=None):
         'totalMovies' : len(Actors.query.all())
         })   
 
-    except :
+    except unprocessable:
        abort(422)  
 
   '''
   PATCH a Moive. 
   '''
   @app.route('/movies/<int:movies_id>', methods=['PATCH'])
+  @requires_auth("patch:movies")
   def update_movies(movies_id):
     body = request.get_json()
 
@@ -237,6 +249,7 @@ def create_app(test_config=None):
   PATCH an Actor. 
   '''
   @app.route('/actors/<int:actors_id>', methods=['PATCH'])
+  @requires_auth("patch:actors")
   def update_actors(actors_id):
     body = request.get_json()
 
@@ -260,8 +273,50 @@ def create_app(test_config=None):
       return jsonify({
         'success': True
       })
-    except:
+    except unprocessable:
       abort(400)
+  '''
+  Error handlers for all expected errors including 404 and 422. 
+  '''
+  @app.errorhandler(404)
+  def not_found(error):
+    return jsonify({
+      "success": False,
+      "error": 404,
+      "message": "Not found"
+    }), 404
+
+  @app.errorhandler(422)
+  def unprocessable(error):
+    return jsonify({
+      "success" : False,
+      "error": 422,
+      "message": "unprocessable"
+    }), 422
+  @app.errorhandler(400)
+  def bad_request(error):
+    return jsonify({
+      "success": False, 
+      "error": 400,
+      "message": "bad request"
+      }), 400
+
+  @app.errorhandler(405)
+  def method_not_allowed(error):
+    return jsonify({
+      "success": False, 
+      "error": 405,
+      "message": "method not allowed"
+      }), 405
+  
+  @app.errorhandler(500)
+  def internal_server_error(error):
+    return jsonify({
+      "success": False,
+      "error": 500,
+      "message": "internal server error"
+      }), 500
+  
  
     
   return app
