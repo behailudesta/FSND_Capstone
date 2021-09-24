@@ -68,6 +68,7 @@ def create_app(test_config=None):
   '''
 
   @app.route('/')
+
   def status():
     return jsonify({
       'status': 'Healthy running!!'
@@ -77,7 +78,7 @@ def create_app(test_config=None):
   An endpoint to handle GET requests for all available Movies.
   '''
   @app.route('/movies')
-  @requires_auth("get:movies")
+  @requires_auth('get:movies')
   def retrieve_movies():
     selection = Movies.query.order_by(Movies.id).all()
     current_movies = paginate_movies(request, selection)
@@ -325,4 +326,5 @@ app = create_app()
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8080, debug=True)
+  #app.run()
  
