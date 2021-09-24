@@ -1,5 +1,6 @@
 # FSND-Capstone-Project
 ## Casting Agency API program
+https://capstone-fsnd-baya.herokuapp.com
 
 ### Installing Dependencies 
 
@@ -67,98 +68,15 @@ One note before you delve into your tasks: for each endpoint, you are expected t
 
 8. error handlers for all expected errors including 400, 404, 422 and 500. 
 
-'''
-API calls with example.
+    '''
+    API calls with example. Note: the assumption is the tester got all the necessary permissions.
 
-GET '/movies'
+    GET '/movies'
 
-- Fetches a dictionary of movies
-    Example:
-    curl -X GET http://127.0.0.1:8080/movies
-
-            "movies": [
-                {
-                "id": 2,
-                "release_date": "Sat, 05 Sep 1998 08:00:00 GMT",
-                "title": "Madagascar"
-                },
-                {
-                "id": 3,
-                "release_date": "Mon, 06 Feb 1989 08:00:00 GMT",
-                "title": "Terminator"
-                },
-                {
-                "id": 4,
-                "release_date": "Mon, 01 Jan 1996 08:00:00 GMT",
-                "title": "Titanic"
-                },
-                {
-                "id": 5,
-                "release_date": "Mon, 01 Jan 1990 08:00:00 GMT",
-                "title": "Top Gun"
-                },
-                {
-                "id": 6,
-                "release_date": "Wed, 05 Jul 1989 08:00:00 GMT",
-                "title": "The Merchant"
-                }
-            ],
-            "success": true,
-            "total_movies": 5
-            }
-
-
-```
-GET '/actors'
-
-    Example:
-        curl -X GET http://127.0.0.1:8080/actors
-
-            {
-                "actors": [
-                    {
-                    "age": 66,
-                    "gender": "Male",
-                    "id": 1,
-                    "name": "Johntra volta"
-                    },
-                    {
-                    "age": 55,
-                    "gender": "Male",
-                    "id": 2,
-                    "name": "Harrison Ford"
-                    },
-                    {
-                    "age": 45,
-                    "gender": "Female",
-                    "id": 3,
-                    "name": "Angelia Jolie"
-                    }
-                ],
-                "success": true,
-                "total_actors": 3
-            }
-
-
-
-DELETE '/movies/${id}'
-- Deletes a specified movie using the id of the movie
-    
-    Example:
-    curl -X DELETE http://127.0.0.1:8080/movies/3
-        {
-            "deleted": 3,
-            "success": true,
-            "totalMovies": 6
-        }
-
-POST '/movies'
-- Sends a post request in order to add a new movie
-
+    - Fetches a dictionary of movies
         Example:
-        curl -X POST -H "Content-Type: application/json" -d '{"title":"Desperate Measures", "release_date":"01/01/1990"}' http://127.0.0.1:8080/movies
-        {
-                "created": 7,
+        curl -X GET http://127.0.0.1:8080/movies
+
                 "movies": [
                     {
                     "id": 2,
@@ -184,22 +102,106 @@ POST '/movies'
                     "id": 6,
                     "release_date": "Wed, 05 Jul 1989 08:00:00 GMT",
                     "title": "The Merchant"
-                    },
-                    {
-                    "id": 7,
-                    "release_date": "Mon, 01 Jan 1990 08:00:00 GMT",
-                    "title": "Desperate Measures"
                     }
                 ],
                 "success": true,
-                "totalMovies": 6
-        }
+                "total_movies": 5
+                }
 
-    All the above Endpoints have been created, please refer app.py file.
+
+    ```
+    GET '/actors'
+
+        Example:
+            curl -X GET http://127.0.0.1:8080/actors
+
+                {
+                    "actors": [
+                        {
+                        "age": 66,
+                        "gender": "Male",
+                        "id": 1,
+                        "name": "Johntra volta"
+                        },
+                        {
+                        "age": 55,
+                        "gender": "Male",
+                        "id": 2,
+                        "name": "Harrison Ford"
+                        },
+                        {
+                        "age": 45,
+                        "gender": "Female",
+                        "id": 3,
+                        "name": "Angelia Jolie"
+                        }
+                    ],
+                    "success": true,
+                    "total_actors": 3
+                }
+
+
+
+    DELETE '/movies/${id}'
+    - Deletes a specified movie using the id of the movie
+        
+        Example:
+        curl -X DELETE http://127.0.0.1:8080/movies/3
+            {
+                "deleted": 3,
+                "success": true,
+                "totalMovies": 6
+            }
+
+    POST '/movies'
+    - Sends a post request in order to add a new movie
+
+            Example:
+            curl -X POST -H "Content-Type: application/json" -d '{"title":"Desperate Measures", "release_date":"01/01/1990"}' http://127.0.0.1:8080/movies
+            {
+                    "created": 7,
+                    "movies": [
+                        {
+                        "id": 2,
+                        "release_date": "Sat, 05 Sep 1998 08:00:00 GMT",
+                        "title": "Madagascar"
+                        },
+                        {
+                        "id": 3,
+                        "release_date": "Mon, 06 Feb 1989 08:00:00 GMT",
+                        "title": "Terminator"
+                        },
+                        {
+                        "id": 4,
+                        "release_date": "Mon, 01 Jan 1996 08:00:00 GMT",
+                        "title": "Titanic"
+                        },
+                        {
+                        "id": 5,
+                        "release_date": "Mon, 01 Jan 1990 08:00:00 GMT",
+                        "title": "Top Gun"
+                        },
+                        {
+                        "id": 6,
+                        "release_date": "Wed, 05 Jul 1989 08:00:00 GMT",
+                        "title": "The Merchant"
+                        },
+                        {
+                        "id": 7,
+                        "release_date": "Mon, 01 Jan 1990 08:00:00 GMT",
+                        "title": "Desperate Measures"
+                        }
+                    ],
+                    "success": true,
+                    "totalMovies": 6
+            }
+
+        All the above Endpoints have been created, please refer app.py file.
 
 ###   Auth0 Setup
 
-## API Endpoints
+### API Endpoints
+
 AUTH0_DOMAIN, ALGORITHMS and API_AUDIENCE are all available in the setup.sh file for reference. Json Web Tokens: You can find JWTs for each role in the setup.sh file to run the app locally.
 
 Roles: All 3 roles have been defined in Auth0 and following permissions as shown for each role below are also defined in Auth0.
@@ -209,22 +211,8 @@ Roles: All 3 roles have been defined in Auth0 and following permissions as shown
     Executive Producer _ All permissions a Casting Director has and _ post:movies and delete:movies
 
 ### Deployment Details:
-App is deployed to Heroku.
-Heroku Postgres DATABASE details are available in setup.sh file for reference.
-Use the above stated endpoints and append to this link above to execute the app either thru CURL or Postman. For example:
+    App is deployed to Heroku.
+    Heroku Postgres DATABASE details are available in setup.sh file for reference.
+    Use the above stated endpoints and append to this link above to execute the app either thru CURL or Postman. For example:
 
-$ curl -X GET https://harsh-casting-agency.herokuapp.com//actors?page=1
-$ curl -X POST https://harsh-casting-agency.herokuapp.com//actors
-$ curl -X PATCH https://harsh-casting-agency.herokuapp.com//actors/1
-$ curl -X DELETE https://harsh-casting-agency.herokuapp.com//actors/1
 
-Similarly, you can build these for /movies endpoints too.
-
-Testing:
-We can run our entire test case by running the following command at command line
-
-$ dropdb castagency
-$ createdb castagency
-$ psql castagency < db.psql
-$ python test_app.py
-```
